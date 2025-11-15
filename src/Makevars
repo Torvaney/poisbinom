@@ -1,1 +1,2 @@
-PKG_LIBS = -lfftw3 -lm
+PKG_CPPFLAGS ?= $(shell pkg-config --cflags fftw3 2>/dev/null)
+PKG_LIBS     ?= $(shell pkg-config --libs fftw3 2>/dev/null) -lm
