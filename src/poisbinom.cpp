@@ -254,3 +254,45 @@ void dft_pmf(fftw_complex* out, int m,  Rcpp::NumericVector& pp)
   fftw_destroy_plan(p);
   fftw_free(in);
 }
+
+// -----------------------------
+// C wrappers to provide unmangled symbols expected by src/init.c
+// -----------------------------
+
+extern "C" {
+
+  SEXP poisbinom_dpoisbinom(SEXP x, SEXP pp, SEXP log_d) {
+    Rcpp::IntegerVector x_vec = Rcpp::as<Rcpp::IntegerVector>(x);
+    Rcpp::NumericVector pp_vec = Rcpp::as<Rcpp::NumericVector>(pp);
+    bool log_flag = Rcpp::as<bool>(log_d);
+    Rcpp::NumericVector res = dpoisbinom(x_vec, pp_vec, log_flag);
+    return Rcpp::wrap(res);
+  }
+
+  SEXP poisbinom_ppoisbinom(SEXP q, SEXP pp, SEXP lower_tail, SEXP log_p) {
+    Rcpp::IntegerVector q_vec = Rcpp::as<Rcpp::IntegerVector>(q);
+    Rcpp::NumericVector pp_vec = Rcpp::as<Rcpp::NumericVector>(pp);
+    bool lower = Rcpp::as<bool>(lower_tail);
+    bool logflag = Rcpp::as<bool>(log_p);
+    Rcpp::NumericVector res = ppoisbinom(q_vec, pp_vec, lower, logflag);
+    return Rcpp::wrap(res);
+  }
+
+  SEXP poisbinom_qpoisbinom(SEXP p, SEXP pp, SEXP lower_tail, SEXP log_p) {
+    Rcpp::NumericVector p_vec = Rcpp::as<Rcpp::NumericVector>(p);
+    Rcpp::NumericVector pp_vec = Rcpp::as<Rcpp::NumericVector>(pp);
+    bool lower = Rcpp::as<bool>(lower_tail);
+    bool logflag = Rcpp::as<bool>(log_p);
+    Rcpp::IntegerVector res = qpoisbinom(p_vec, pp_vec, lower, logflag);
+    return Rcpp::wrap(res);
+  }
+
+  SEXP poisbinom_rpoisbinom(SEXP n, SEXP pp) {
+    int n_i = Rcpp::as<int>(n);
+    Rcpp::NumericVector pp_vec = Rcpp::as<Rcpp::NumericVector>(pp);
+    Rcpp::IntegerVector res = rpoisbinom(n_i, pp_vec);
+    return Rcpp::wrap(res);
+  }
+
+} // extern "C"
+

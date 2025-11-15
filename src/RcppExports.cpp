@@ -5,9 +5,14 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // dpoisbinom
 Rcpp::NumericVector dpoisbinom(Rcpp::IntegerVector& x, Rcpp::NumericVector& pp, bool log_d);
-RcppExport SEXP poisbinom_dpoisbinom(SEXP xSEXP, SEXP ppSEXP, SEXP log_dSEXP) {
+RcppExport SEXP _poisbinom_dpoisbinom(SEXP xSEXP, SEXP ppSEXP, SEXP log_dSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +25,7 @@ END_RCPP
 }
 // ppoisbinom
 Rcpp::NumericVector ppoisbinom(Rcpp::IntegerVector& q, Rcpp::NumericVector& pp, bool lower_tail, bool log_p);
-RcppExport SEXP poisbinom_ppoisbinom(SEXP qSEXP, SEXP ppSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
+RcppExport SEXP _poisbinom_ppoisbinom(SEXP qSEXP, SEXP ppSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +39,7 @@ END_RCPP
 }
 // qpoisbinom
 Rcpp::IntegerVector qpoisbinom(Rcpp::NumericVector& p, Rcpp::NumericVector& pp, bool lower_tail, bool log_p);
-RcppExport SEXP poisbinom_qpoisbinom(SEXP pSEXP, SEXP ppSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
+RcppExport SEXP _poisbinom_qpoisbinom(SEXP pSEXP, SEXP ppSEXP, SEXP lower_tailSEXP, SEXP log_pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -48,7 +53,7 @@ END_RCPP
 }
 // rpoisbinom
 Rcpp::IntegerVector rpoisbinom(int n, Rcpp::NumericVector& pp);
-RcppExport SEXP poisbinom_rpoisbinom(SEXP nSEXP, SEXP ppSEXP) {
+RcppExport SEXP _poisbinom_rpoisbinom(SEXP nSEXP, SEXP ppSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
